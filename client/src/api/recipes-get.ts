@@ -1,12 +1,5 @@
 import { Recipe } from '~models';
-
-export interface RecipeDto {
-  id: string;
-  name: string;
-  description: string;
-  ingredients: { text: string; }[];
-  steps: { text: string; }[]
-}
+import { RecipeDto } from 'cookbook-shared';
 
 export async function recipesGet(): Promise<Recipe[]> {
   const response = await fetch('/api/recipes');

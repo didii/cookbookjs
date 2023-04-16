@@ -1,15 +1,8 @@
+import { RecipeDto } from 'cookbook-shared';
 import { Express } from 'express';
 import { Db, ObjectId, WithId } from 'mongodb';
 import { Collection } from '~const';
 import { RecipeModel } from '~models';
-
-interface RecipeDto {
-  id: string;
-  name: string;
-  description?: string;
-  ingredients: { text: string; }[];
-  steps: { text: string; }[];
-}
 
 export function recipeGet(app: Express, db: Db) {
   app.get('/api/recipes', async (req, res) => {
@@ -36,7 +29,7 @@ export function recipeGetById(app: Express, db: Db) {
         res.send(recipe);
         return;
       }
-      
+
       res.status(404).send('Not found');
     }
     catch (error) {
