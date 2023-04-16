@@ -17,7 +17,7 @@
       "~api": ["src/api"],
       "~components/*": ["src/components/*"],
       "~models": ["src/models"],
-      "~pages/*": ["src/pages/*"],
+      "~pages/*": ["src/pages/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
