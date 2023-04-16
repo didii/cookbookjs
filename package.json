@@ -1,0 +1,17 @@
+{
+  "name": "cookbookjs",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "npm run start -w server",
+    "start:client": "npm run start -w client"
+  },
+  "author": "",
+  "license": "ISC"
+}
