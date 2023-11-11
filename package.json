@@ -13,5 +13,9 @@
     "start:client": "npm run start -w client"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "volta": {
+    "node": "20.9.0",
+    "npm": "10.2.3"
+  }
 }
