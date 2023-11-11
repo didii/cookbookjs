@@ -22,7 +22,7 @@ const recipeCreateSchema = z.object({
 export type RecipeCreateDto = z.infer<typeof recipeCreateSchema>;
 
 export namespace RecipeCreateDto {
-  export function is(obj: any) {
+  export function parse(obj: any) {
     return recipeCreateSchema.safeParse(obj);
   }
 }
