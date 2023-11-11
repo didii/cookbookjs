@@ -132,3 +132,4 @@ dist
 # custom
 */.idea
 */.vscode
+.vscode/settings.json
