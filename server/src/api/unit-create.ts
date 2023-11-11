@@ -1,4 +1,4 @@
-import { UnitCreateDto } from 'cookbook-shared';
+import { UnitCreateDto } from 'cookbook-shared/dtos';
 import { Express } from 'express';
 import { Db } from 'mongodb';
 import { Collection } from '~const';

@@ -1,15 +1,8 @@
+import { UnitDto } from 'cookbook-shared/dtos';
 import { Express } from 'express';
 import { Db, ObjectId, WithId } from 'mongodb';
 import { Collection } from '~const';
 import { UnitModel } from '~models';
-
-interface UnitDto {
-  id: string;
-  fullName?: string;
-  shortName: string;
-  type: string;
-}
-
 
 export function unitGet(app: Express, db: Db) {
   app.get('/api/units', async (req, res) => {

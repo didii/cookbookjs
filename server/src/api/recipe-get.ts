@@ -1,4 +1,4 @@
-import { RecipeDto } from 'cookbook-shared';
+import { RecipeDto } from 'cookbook-shared/dtos';
 import { Express } from 'express';
 import { Db, ObjectId, WithId } from 'mongodb';
 import { Collection } from '~const';
