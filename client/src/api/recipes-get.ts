@@ -1,8 +1,8 @@
+import { RecipeDto } from 'cookbook-shared/dtos';
 import { Recipe } from '~models';
-import { RecipeDto } from 'cookbook-shared';
 
-export async function recipesGet(): Promise<Recipe[]> {
-  const response = await fetch('/api/recipes');
+export async function recipesGet(signal?: AbortSignal): Promise<Recipe[]> {
+  const response = await fetch('/api/recipes', {signal});
   if (!response.ok) {
     throw Error('' + response.status);
   }
