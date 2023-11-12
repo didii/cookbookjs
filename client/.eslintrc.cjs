@@ -7,14 +7,20 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:import/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
     ecmaVersion: 12,
     sourceType: 'module',
   },
   plugins: [
+    'react',
     '@typescript-eslint',
     'import',
   ],
@@ -56,6 +62,15 @@ module.exports = {
     'no-useless-escape': 'warn', // Good rule, but shouldn't be an error
     'no-var': 'warn', // Don't use var, but let or const instead
     'prefer-const': 'warn', // Good rule, but shouldn't be an error
+    'react/display-name': 'off', // Doesn't work properly if your only prop happens to be an object
+    'react/jsx-uses-react': 'off', // JSX doesn't use React import anymore for React v17+
+    'react/prop-types': 'off', // Moot rule when using TS, using properties that aren't defined isn't allowed by TS anyway
+    'react/react-in-jsx-scope': 'off', // Not needed anymore for React v17+
+    'react/require-render-return': 'off', // Moot rule when using TS and when extending Component
+    'react-hooks/exhaustive-deps': ['warn', {
+      'additionalHooks': '(useAbortEffect)',
+    }],
+    'react-hooks/rules-of-hooks': 'warn', // Stop being so annoying eslint....
     'semi': ['warn', 'always'], // Always end a line with a semi-colon
     'no-restricted-imports': ['warn', {
       paths: [{
@@ -71,6 +86,10 @@ module.exports = {
     }],
   },
   settings: {
+    react: {
+      // Let eslint detect the react version by itself
+      version: 'detect',
+    },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
