@@ -7,27 +7,27 @@ import { Recipe } from '~models';
 
 function HomeView() {
   const [isLoading, setIsLoading] = useState(false);
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  useAbortEffect((signal) => {
-    async function execute() {
-      if (isLoading) {
-        try {
-          const fetched = await recipesGet(signal);
-          setRecipes(fetched);
-        }
-        finally {
-          setIsLoading(false);
-        }
+  const [recipes, setRecipes] = useState<Recipe[]>();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useAbortEffect(async (signal) => {
+    if (isLoading) {
+      try {
+        const fetched = await recipesGet(signal);
+        setRecipes(fetched);
+      }
+      finally {
+        setIsLoading(false);
       }
     }
-    execute();
   }, [isLoading]);
 
   const display = useMemo(() => {
     if (isLoading) return 'loading';
-    if (recipes == null || recipes.length === 0) return 'empty';
+    if (recipes == null) return 'idle';
+    if (recipes.length === 0) return 'empty';
     return 'data';
-  }, []);
+  }, [isLoading, recipes]);
 
   return (
     <div>
@@ -38,14 +38,15 @@ function HomeView() {
       <div>
         <button onClick={() => setIsLoading(true)}>Load recipes</button>
       </div>
-      {display === 'empty' && <p>Click load to load all recipes</p>}
+      {display === 'idle' && <p>Click load to load all recipes</p>}
+      {display === 'empty' && <p>No recipes found</p>}
       {display === 'loading' && <p>Loading...</p>}
       {display === 'data' && (
         <div>
           <p>All recipes:</p>
           <ul>
-            {recipes.map(r => (
-              <li>
+            {recipes!.map(r => (
+              <li key={r.id}>
                 <Link to={{ id: 'recipe-detail', params: { id: r.id } }}>{r.id}</Link>
               </li>
             ))}
