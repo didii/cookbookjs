@@ -37,6 +37,24 @@ async function main() {
   const app = await createApp(port);
   console.log(`Server is listening at http://localhost:${port}`);
 
+  // Logger middleware
+  app.use((req, res, next) => {
+    const guid = crypto.randomUUID();
+    const startDate = new Date();
+    console.log(`[${guid}] [${startDate.toISOString()}] ${req.method} ${req.url}`);
+    next();
+    const endDate = new Date();
+    console.log(`[${guid}] [${endDate.toISOString()}] ${req.method} ${req.url}: ${res.statusCode}`);
+  });
+
+  app.use((req, res, next) => {
+    const aborter = new AbortController();
+    req.signal = aborter.signal;
+    const handler = () => aborter.abort();
+    req.on('close', handler);
+    next();
+    req.removeListener('close', handler);
+  });
 
   // Register our API routes to connect to the DB
   for (const method of Object.values(api)) {
