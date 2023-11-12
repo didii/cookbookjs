@@ -4,6 +4,6 @@
   "execMap": {
     "ts": "node -r tsconfig-paths/register -r ts-node/register"
   },
-  "watch": ["src", "../shared"],
+  "watch": [".", "../shared"],
   "ext": "js,json,ts"
 }
