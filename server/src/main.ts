@@ -1,3 +1,4 @@
+import {tryParseInt} from 'cookbook-shared/helpers';
 import express, { Express, json } from 'express';
 import { MongoClient } from 'mongodb';
 import * as api from '~api';
@@ -26,15 +27,16 @@ async function createMongoClient() {
 }
 
 async function main() {
+  // Connect to our database
+  const client = await createMongoClient();
+  const db = client.db(env.DB_NAME);
+
   // Create the express server
-  const port = 8000;
+  const tryParsePort = tryParseInt(env.PORT);
+  const port = tryParsePort.success ? tryParsePort.value : 8000;
   const app = await createApp(port);
   console.log(`Server is listening at http://localhost:${port}`);
 
-  // Connect to our database
-  const client = await createMongoClient();
-  console.log(`Connected to DB at ${env.DB_CONN_STRING}`);
-  const db = client.db(env.DB_NAME);
 
   // Register our API routes to connect to the DB
   for (const method of Object.values(api)) {
