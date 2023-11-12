@@ -12,7 +12,8 @@
       "~env": ["src/env"],
       "~models": ["src/models"],
       "~types": ["src/types"]
-    }
+    },
+    "types": ["./src/types/express.d.ts"]
   },
   "include": [
     "./**/*.ts"
