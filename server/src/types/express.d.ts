@@ -1,6 +1,15 @@
+import { ResponseError } from '~models';
+
 declare module 'express-serve-static-core' {
   interface Request {
-    signal?: AbortSignal;
+    correlationId: string;
+    timestamp: Date;
+    signal: AbortSignal;
+  }
+  interface Response {
+    correlationId: string;
+    error?: ResponseError;
+    sendError(error: ResponseError): Response;
   }
 }
 
