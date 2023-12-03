@@ -1,7 +1,7 @@
 import { RecipeCreateDto } from 'cookbook-shared/dtos';
 import { Recipe } from '~models';
 
-export async function recipeCreate(recipe: Recipe) {
+export async function recipeCreate(recipe: Omit<Recipe, 'id'>) {
   const body: RecipeCreateDto = {
     ingredients: recipe.ingredients,
     name: recipe.name,
