@@ -1,11 +1,10 @@
 import { UnitCreateDto } from 'cookbook-shared/dtos';
-import { Express } from 'express';
-import { Db } from 'mongodb';
 import { Collection } from '~const';
+import { createEndpoint } from '~helpers/create-endpoint';
 import { UnitModel } from '~models';
 
 
-export function unitCreate(app: Express, db: Db) {
+export const unitCreate = createEndpoint(function unitCreate(app, db) {
   app.post('/api/units', async (req, res) => {
     const dto = req.body as UnitCreateDto;
     const validationResult = UnitCreateDto.is(req.body);
@@ -39,4 +38,4 @@ export function unitCreate(app: Express, db: Db) {
     }
     res.status(500).send('Unknown error');
   });
-}
+});

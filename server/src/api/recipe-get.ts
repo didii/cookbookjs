@@ -1,25 +1,25 @@
 import { RecipeDto } from 'cookbook-shared/dtos';
-import { Express } from 'express';
-import { Db, ObjectId, WithId } from 'mongodb';
+import { ObjectId, WithId } from 'mongodb';
 import { Collection } from '~const';
+import { createEndpoint } from '~helpers/create-endpoint';
 import { RecipeModel } from '~models';
 
-export function recipeGet(app: Express, db: Db) {
+export const recipeGet = createEndpoint(function recipeGet(app, db) {
   app.get('/api/recipes', async (req, res) => {
     const recipesCollection = db.collection(Collection.Recipes);
-    const recipes = await recipesCollection.find({}).toArray() as WithId<RecipeModel>[];
-    const dtos = recipes.map<RecipeDto>(r => ({
+    const recipes = (await recipesCollection.find({}).toArray()) as WithId<RecipeModel>[];
+    const dtos = recipes.map<RecipeDto>((r) => ({
       id: r._id.toString(),
       name: r.name,
       description: r.description,
-      ingredients: r.ingredients.map(i => ({ text: i.text })),
+      ingredients: r.ingredients.map((i) => ({ text: i.text })),
       steps: r.steps,
     }));
     res.send(dtos);
   });
-}
+});
 
-export function recipeGetById(app: Express, db: Db) {
+export const recipeGetById = createEndpoint(function recipeGetById(app, db) {
   app.get('/api/recipes/:id', async (req, res) => {
     const id = req.params.id;
     const recipesCollection = db.collection(Collection.Recipes);
@@ -31,9 +31,8 @@ export function recipeGetById(app: Express, db: Db) {
       }
 
       res.status(404).send('Not found');
-    }
-    catch (error) {
+    } catch (error) {
       res.status(500).send('Exception occurred: ' + error);
     }
   });
-}
+});
