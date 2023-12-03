@@ -10,6 +10,8 @@
       "~api": ["src/api/index"],
       "~const": ["src/const"],
       "~env": ["src/env"],
+      "~helpers/*": ["src/helpers/*"],
+      "~middleware": ["src/middleware/index"],
       "~models": ["src/models"],
       "~types": ["src/types"]
     },
