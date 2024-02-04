@@ -3,7 +3,7 @@ import { createEndpoint } from 'src/helpers/create-endpoint';
 import { Collection } from '~const';
 import { RecipeModel } from '~models';
 
-export const recipeCreate = createEndpoint(function recipeCreate(app, db) {
+export const recipeCreate = createEndpoint((app, db) => {
   app.post('/api/recipes', async (req, res, next) => {
     const validation = RecipeCreateDto.parse(req.body);
     if (!validation.success) {

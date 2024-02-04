@@ -54,9 +54,9 @@ export async function run(signal?: AbortSignal) {
 
   // Register our API routes to connect to the DB
   const registered: string[] = [];
-  for (const method of Object.values(api)) {
+  for (const [name, method] of Object.entries(api)) {
     if ('isEndpoint' in method && method.isEndpoint === true) {
-      registered.push(method.name);
+      registered.push(name);
       method(app, db);
     }
   }

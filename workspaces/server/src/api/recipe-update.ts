@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Collection } from '~const';
 import { createEndpoint } from '~helpers/create-endpoint';
 
-export const recipeUpdate = createEndpoint(function recipeUpdate(app, db) {
+export const recipeUpdate = createEndpoint((app, db) => {
   app.put('/api/recipe/:id', async (req, res) => {
     const id = req.params.id;
     const recipesCollection = db.collection(Collection.Recipes);

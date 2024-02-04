@@ -3,13 +3,19 @@ import { Collection } from '~const';
 import { createEndpoint } from '~helpers/create-endpoint';
 import { UnitModel } from '~models';
 
-
-export const unitCreate = createEndpoint(function unitCreate(app, db) {
+export const unitCreate = createEndpoint((app, db) => {
   app.post('/api/units', async (req, res) => {
     const dto = req.body as UnitCreateDto;
     const validationResult = UnitCreateDto.is(req.body);
-    
-    if (!dto || !dto.fullName || typeof dto.fullName !== 'string' || !dto.shortName || typeof dto.shortName !== 'string' || !dto.type) {
+
+    if (
+      !dto ||
+      !dto.fullName ||
+      typeof dto.fullName !== 'string' ||
+      !dto.shortName ||
+      typeof dto.shortName !== 'string' ||
+      !dto.type
+    ) {
       res.status(400).send('Invalid DTO');
       return;
     }

@@ -4,7 +4,7 @@ import { Collection } from '~const';
 import { createEndpoint } from '~helpers/create-endpoint';
 import { RecipeModel } from '~models';
 
-export const recipeGet = createEndpoint(function recipeGet(app, db) {
+export const recipeGet = createEndpoint((app, db) => {
   app.get('/api/recipes', async (req, res) => {
     const recipesCollection = db.collection(Collection.Recipes);
     const recipes = (await recipesCollection.find({}).toArray()) as WithId<RecipeModel>[];
@@ -19,7 +19,7 @@ export const recipeGet = createEndpoint(function recipeGet(app, db) {
   });
 });
 
-export const recipeGetById = createEndpoint(function recipeGetById(app, db) {
+export const recipeGetById = createEndpoint((app, db) => {
   app.get('/api/recipes/:id', async (req, res) => {
     const id = req.params.id;
     const recipesCollection = db.collection(Collection.Recipes);
