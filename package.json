@@ -1,9 +1,7 @@
 {
   "name": "cookbookjs",
   "workspaces": [
-    "client",
-    "server",
-    "shared"
+    "workspaces/*"
   ],
   "version": "0.0.1",
   "description": "",

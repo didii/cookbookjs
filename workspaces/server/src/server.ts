@@ -7,7 +7,7 @@ import { errorHandler } from '~helpers/error-handler';
 import { aborter, enricher, logger } from '~middleware';
 import { ResponseError } from '~models';
 
-async function createApp(port: number) {
+async function createApp(port: number, signal?: AbortSignal) {
   const app = express();
   app.response.sendError = function (error: ResponseError) {
     errorHandler(error, this);
@@ -15,27 +15,36 @@ async function createApp(port: number) {
   };
 
   return new Promise<Express>((resolve, reject) => {
-    app.listen(port, () => {
+    if (signal?.aborted) {
+      reject();
+    }
+
+    const server = app.listen(port, () => {
       resolve(app);
     });
+    server.on('close', () => reject());
+    signal?.addEventListener('abort', () => server.close());
   });
 }
 
-async function createMongoClient() {
+async function createMongoClient(signal?: AbortSignal) {
   const client = new MongoClient(env.DB_CONN_STRING);
+  signal?.addEventListener('abort', () => {
+    client.close();
+  });
   await client.connect();
   return client;
 }
 
-export async function run() {
+export async function run(signal?: AbortSignal) {
   // Connect to our database
-  const client = await createMongoClient();
+  const client = await createMongoClient(signal);
   const db = client.db(env.DB_NAME);
 
   // Create the express server
   const tryParsePort = tryParseInt(env.PORT);
   const port = tryParsePort.success ? tryParsePort.value : 8000;
-  const app = await createApp(port);
+  const app = await createApp(port, signal);
   console.log(`Server is listening at http://localhost:${port}`);
 
   // Register middleware
@@ -52,4 +61,8 @@ export async function run() {
     }
   }
   console.log('Registered endpoints:', registered.join(', '));
+
+  return new Promise<void>((resolve) => {
+    signal?.addEventListener('abort', () => resolve());
+  });
 }

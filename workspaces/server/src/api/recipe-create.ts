@@ -18,10 +18,7 @@ export const recipeCreate = createEndpoint(function recipeCreate(app, db) {
 
     // Map
     const recipe: RecipeModel = {
-      name: dto.name,
-      description: dto.description,
-      steps: dto.steps?.map((s) => ({ text: s.text! })) ?? [],
-      ingredients: dto.ingredients?.map((i) => ({ text: i.text! })) ?? [],
+      ...dto,
     };
 
     // Dump it in!
