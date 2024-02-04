@@ -9,7 +9,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:import/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,7 +21,6 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
-    'import',
   ],
   rules: {
     '@typescript-eslint/ban-types': 'warn', // Good rule, but shouldn't be an error
@@ -36,22 +34,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off', // TS already tells us this
     'quotes': ['warn', 'single'], // Single quotes!
     'comma-dangle': ['warn', 'always-multiline'], // Trailing comma's FTW
-    'import/default': 'off', // TS warns us already about this
-    'import/named': 'off', // Good rule but doesn't see renames directly which is pretty annoying, also TS will help us anyway
-    'import/namespace': 'off', // Seems to be giving false positives, also gives false positives
-    'import/no-unresolved': 'off', // TS warns us about unresolvable imports
-    'import/order': ['warn', {
-      'groups': [
-        ['builtin', 'external'], // All nodes_modules imports
-        'internal', // TS-config alias paths
-        ['parent', 'index'], // First parents, not too sure about the index files
-        'sibling', // Then siblings
-        'object', // Probably never used, e.g. import log = import.log
-        'unknown',  // Whatever else?
-      ],
-      'alphabetize': { 'order': 'asc', 'caseInsensitive': true }, // Always alphabetize each group by path, makes PR's a lot easier
-      'warnOnUnassignedImports': true, // We should not have import code that is dependent on side-effects and their order, so import '...'; is also checked
-    }],
     'indent': ['warn', 2, { 'SwitchCase': 1 }], // Indentation should be 2
     'no-constant-condition': ['warn', { 'checkLoops': false }], // Good rule, but constants in loops are fine
     'no-empty-pattern': 'warn', // Fine, but shouldn't be an error
@@ -64,6 +46,7 @@ module.exports = {
     'prefer-const': 'warn', // Good rule, but shouldn't be an error
     'react/display-name': 'off', // Doesn't work properly if your only prop happens to be an object
     'react/jsx-uses-react': 'off', // JSX doesn't use React import anymore for React v17+
+    'react/no-unknown-property': 'off', // TS is better at this
     'react/prop-types': 'off', // Moot rule when using TS, using properties that aren't defined isn't allowed by TS anyway
     'react/react-in-jsx-scope': 'off', // Not needed anymore for React v17+
     'react/require-render-return': 'off', // Moot rule when using TS and when extending Component
