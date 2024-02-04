@@ -1,0 +1,12 @@
+@root = http://localhost:8000
+
+### Get all recipes
+GET {{root}}/api/recipes
+
+
+### Get recipe by ID
+GET {{root}}/api/recipes/656c792544ed40d9d6e44d3f
+
+
+### Get all units
+GET {{root}}/api/units
